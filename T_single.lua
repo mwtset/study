@@ -1,4 +1,4 @@
-local function t_single(a,d,z_v_n,z_angle_begin,z_angle_end,z_v_begin,z_v_end,t0)
+local function t_single(a,d,z_v_n,z_angle_end,z_angle_begin,z_v_begin,z_v_end,t0)
     --已知量
     z_angle_begin =z_angle_begin or 0--输入关节起始角度值，默认为0
     z_angle_end = z_angle_end or 90--输入关节终止角度值，默认为90
@@ -17,6 +17,7 @@ local function t_single(a,d,z_v_n,z_angle_begin,z_angle_end,z_v_begin,z_v_end,t0
     then
         print("用户指定的最大速度超过机器人能达到的最大速度:",z_v_n_max)
     else   
+        print("机器人能达到的最大速度:",z_v_n_max)
         s1 = z_v_n^2/(2*a) --加速阶段走过的路程
         s3 = z_v_n^2/(2*d) --减速阶段走过的路程
         s2 = s-s1-s3 --匀速阶段走过的路程
@@ -35,7 +36,7 @@ local function t_single(a,d,z_v_n,z_angle_begin,z_angle_end,z_v_begin,z_v_end,t0
             t2_now = t2-t1
             s3_now = s3 + s2_now
             t3_now = t3-t2
-            print(s1,s2,s3,t1_now,t2_now,t3_now)
+            tablet = {s1_now,t1_now,s2_now,t2_now,s3_now,t3_now,t3}
             print(s1_now,t1)
             print(s2_now,t2)
             print(s3_now,t3)
@@ -43,7 +44,9 @@ local function t_single(a,d,z_v_n,z_angle_begin,z_angle_end,z_v_begin,z_v_end,t0
             print("此时不存在匀速阶段")    
         end    
     end
-    return t3
+return tablet
 end
 
-t_single(2,2,10)
+j1 = t_single(2,2,10,90)--参数依次为加速度、减速度、指定最大速度、运动结束时角度
+
+
